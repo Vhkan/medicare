@@ -1,4 +1,4 @@
-import { PatientForm } from "@/components/forms/PatientForm";
+import PatientForm from "@/components/forms/PatientForm";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -6,6 +6,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="flex h-screen max-h-screen">
+      {/* Add OTP varification |passkey modal */}
       <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
           <Image src='/assets/icons/medicare-high-resolution-logo-transparent.png'
