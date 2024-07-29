@@ -13,24 +13,20 @@ import { FromFieldType } from "./forms/PatientForm";
 
 interface CustomProps {
   control: Control<any>,
-  fieldType: FromFieldType
+  fieldType: FromFieldType,
+
 }
 
-const CustomFormField = ({ control, fieldType, name }: CustomProps) => {
+const CustomFormField = ({ control, fieldType, name, label }: CustomProps) => {
   return (
     <FormField
       control={control}
       name="username"
       render={({ field }) => (
-        <FormItem>
-          <FormLabel>Username</FormLabel>
-          <FormControl>
-            <Input placeholder="shadcn" {...field} />
-          </FormControl>
-          <FormDescription>
-            This is your public display name.
-          </FormDescription>
-          <FormMessage />
+        <FormItem className="flex-1">
+          {fieldType !== FromFieldType.CHECKBOX && label (
+            <FormLabel>{ label }</FormLabel>
+          )}
         </FormItem>
       )}
     />
