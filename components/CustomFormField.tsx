@@ -14,7 +14,16 @@ import { FromFieldType } from "./forms/PatientForm";
 interface CustomProps {
   control: Control<any>,
   fieldType: FromFieldType,
-
+  name: string,
+  label?: string,
+  placeholder?: string,
+  iconSrc?: string,
+  iconAlt?: string,
+  disabled?: boolean,
+  dateFormat?: string,
+  showTimeSelect?: boolean,
+  children?: React.ReactNode,
+  renderSkeleton?: (field: any) => React.ReactNode,    
 }
 
 const CustomFormField = ({ control, fieldType, name, label }: CustomProps) => {
