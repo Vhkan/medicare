@@ -11,6 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Control } from "react-hook-form";
 import { FromFieldType } from "./forms/PatientForm";
 import Image from "next/image";
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 interface CustomProps {
   control: Control<any>,
@@ -24,12 +26,13 @@ interface CustomProps {
   dateFormat?: string,
   showTimeSelect?: boolean,
   children?: React.ReactNode,
-  renderSkeleton?: (field: any) => React.ReactNode,    
+  renderSkeleton?: (field: any) => React.ReactNode,
 }
 
+
 //Component to render all inputs
-const RenderField = ({ field, ...props }: {field: any; props: CustomProps}) => {
-  const { fieldType, iconSrc, iconAlt, placeholder } = props;
+const RenderField = ({ field, fieldType, iconSrc, iconAlt, placeholder, disabled }: CustomProps & { field: any }) => {
+  // const { fieldType, iconSrc, iconAlt, placeholder, disabled } = props;
   switch (fieldType) {
     case FromFieldType.INPUT:
       return (
@@ -48,29 +51,44 @@ const RenderField = ({ field, ...props }: {field: any; props: CustomProps}) => {
               placeholder={placeholder}
               {...field}
               className="shad-input border-0"
+              disabled={disabled}
             />
           </FormControl>
         </div>
       );
-  
+    case FromFieldType.PHONE_INPUT:
+      return (
+        <FormControl>
+          <PhoneInput
+            defaultCountry="CA"
+            placeholder={placeholder}
+            international
+            countryCallingCode
+            value={field.value}
+            onChange={field.onChange}
+            onBlur={field.onBlur}
+            className="input-phone"
+          />
+        </FormControl>
+      );
     default:
       return null;
   }
 }
 
-const CustomFormField = (props : CustomProps) => {
-  const { control, fieldType, name, label } = props; 
+const CustomFormField = (props: CustomProps) => {
+  const { control, fieldType, name, label } = props;
   return (
     <FormField
       control={control}
-      name="username"
+      name={name}
       render={({ field }) => (
         <FormItem className="flex-1">
           {fieldType !== FromFieldType.CHECKBOX && label && (
-            <FormLabel>{ label }</FormLabel>
+            <FormLabel>{label}</FormLabel>
           )}
           <RenderField field={field} {...props} />
-          <FormMessage className="shad-error"/>
+          <FormMessage className="shad-error" />
         </FormItem>
       )}
     />

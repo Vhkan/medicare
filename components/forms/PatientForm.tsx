@@ -20,21 +20,24 @@ export enum FromFieldType {
 }
 
 const formSchema = z.object({
-  username: z.string().min(2, {
+  name: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-})
+  email: z.string().email({ message: "Invalid email address." }),
+  phone: z.string().min(10, { message: "Phone number must be at least 10 digits." }),
+});
 
 const PatientForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      name: "",
+      email: "",
+      phone: ""
     },
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-
     console.log(values)
   }
 
@@ -45,9 +48,8 @@ const PatientForm = () => {
           <h2 className="header">Hi there👋</h2>
           <p className="text-dark-700">Schedule Your First Appointment</p>
         </section>
-        <Button type="submit">Submit</Button>
 
-        <CustomFormField 
+        <CustomFormField
           control={form.control}
           fieldType={FromFieldType.INPUT}
           name="name"
@@ -57,24 +59,26 @@ const PatientForm = () => {
           iconAlt="user"
         />
 
-        <CustomFormField 
+        <CustomFormField
           control={form.control}
           fieldType={FromFieldType.INPUT}
           name="email"
-          label="email"
+          label="Email"
           placeholder="johndoe@email.com"
           iconSrc="/assets/icons/email.svg"
           iconAlt="email"
         />
 
-        <CustomFormField 
+        <CustomFormField
           control={form.control}
-          fieldType={FromFieldType.INPUT}
+          fieldType={FromFieldType.PHONE_INPUT}
           name="phone"
-          label="phone number"
-          placeholder="+1(555)-444-333"
+          label="Phone number"
+          placeholder="+1(555)-444 3333"
         />
 
+        <Button type="submit">Submit</Button>
+        
       </form>
     </Form>
   )
