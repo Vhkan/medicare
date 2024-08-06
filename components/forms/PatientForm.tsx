@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CustomFormField from "../CustomFormField";
+import SubmitButton from "../ui/SubmitButton";
 
 //Form fields types
 export enum FromFieldType {
@@ -77,7 +78,7 @@ const PatientForm = () => {
           placeholder="+1(555)-444 3333"
         />
 
-        <Button type="submit">Submit</Button>
+        <SubmitButton isLOading={isLoading}/>
         
       </form>
     </Form>
