@@ -8,6 +8,8 @@ import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../ui/SubmitButton";
+import { useState } from "react";
+import { userFormValidation } from "@/lib/Validation";
 
 //Form fields types
 export enum FromFieldType {
@@ -20,27 +22,21 @@ export enum FromFieldType {
   SKELETON = 'skeleton'
 }
 
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  email: z.string().email({ message: "Invalid email address." }),
-  phone: z.string().min(10, { message: "Phone number must be at least 10 digits." }),
-});
-
 const PatientForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const [isLoading, setIsloading] = useState(false);
+
+  const form = useForm<z.infer<typeof userFormValidation>>({
+    resolver: zodResolver(userFormValidation),
     defaultValues: {
       name: "",
       email: "",
       phone: ""
     },
-  })
+  });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof userFormValidation>) {
     console.log(values)
-  }
+  };
 
   return (
     <Form {...form}>
@@ -78,11 +74,11 @@ const PatientForm = () => {
           placeholder="+1(555)-444 3333"
         />
 
-        <SubmitButton isLOading={isLoading}/>
+        <SubmitButton isLoading={isLoading}> Get Started </SubmitButton>
         
       </form>
     </Form>
-  )
-}
+  );
+};
 
 export default PatientForm;
