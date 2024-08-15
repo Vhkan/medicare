@@ -13,7 +13,7 @@ import { userFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
 
-//Form fields types
+// Form fields types
 export enum FromFieldType {
   INPUT = 'input',
   TEXTAREA = 'textarea',
@@ -25,7 +25,7 @@ export enum FromFieldType {
 }
 
 const PatientForm = () => {
-  const [isLoading, setIsloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof userFormValidation>>({
@@ -38,18 +38,17 @@ const PatientForm = () => {
   });
 
   async function onSubmit({ name, email, phone }: z.infer<typeof userFormValidation>) {
-    setIsloading(true);
+    setIsLoading(true);
 
     try {
       const userData = { name, email, phone };
-
       const user = await createUser(userData);
-      
-      if(user) router.push(`/patients/${user.$id}/register`);
-
+      if (user) {
+        router.push(`/patients/${user.$id}/register`);
+      }
     } catch (error) {
       console.log(error);
-    }
+    } 
   };
 
   return (
@@ -88,8 +87,8 @@ const PatientForm = () => {
           placeholder="+1(555)-444 3333"
         />
 
-        <SubmitButton isLoading={isLoading}> Get Started </SubmitButton>
-        
+        <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
+
       </form>
     </Form>
   );
