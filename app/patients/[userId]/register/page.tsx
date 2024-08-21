@@ -1,21 +1,33 @@
 import React from 'react';
 import Image from 'next/image';  
+import Link from 'next/link';
+import RegisterForm from '@/components/forms/RegisterForm';
 
 const Register = () => {
   return (
-    <div className='flex h-screen'>
-      <section className='overflow-y-auto w-full'>
-        <div className='max-w-[860px] flex flex-col py-10 mx-auto'>
-          <Image 
-            src='/assets/icons/medicare-high-resolution-logo-transparent.png' 
-            height={1000}
-            width={1000}
-            alt='Medicare Logo'
-            className='mb-12 h-10 w-fit'
-          />
+    <div className="flex h-screen max-h-screen">
+    {/* Add OTP varification |passkey modal */}
+    <section className="remove-scrollbar container my-auto">
+      <div className="sub-container max-w-[496px]">
+        <Image src='/assets/icons/medicare-high-resolution-logo-transparent.png'
+          height={1000}
+          width={1000}
+          alt="patient"
+          className="mb-12 h-10 w-fit" />
+        <RegisterForm />
+        <div className="text-1-regular mt-20 flex justify-between">
+          <p className="justify-items-end text-dark-600 xl:text-left">© 2024 MediCare</p>
+          <Link href="/?admin=true" className="text-green-500">Admin</Link>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
+    <Image src="/assets/images/register-img.png"
+      height={1000}
+      width={1000}
+      alt="patient"
+      className="side-img max-w-[390px]]"
+    />
+  </div>
   );
 }
 
