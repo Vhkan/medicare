@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CustomFormField from "../CustomFormField";
@@ -12,19 +11,9 @@ import { useState } from "react";
 import { userFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
+import { FromFieldType} from "../forms/PatientForm";
 
-// Form fields types
-export enum FromFieldType {
-  INPUT = 'input',
-  TEXTAREA = 'textarea',
-  PHONE_INPUT = 'phoneInput',
-  CHECKBOX = 'checkbox',
-  DATE_PICKER = 'datePicker',
-  SELECT = 'select',
-  SKELETON = 'skeleton'
-}
-
-const RegisterForm = () => {
+const RegisterForm = ({ user }: { user: User }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -66,24 +55,6 @@ const RegisterForm = () => {
           placeholder="John Doe"
           iconSrc="/assets/icons/user.svg"
           iconAlt="user"
-        />
-
-        <CustomFormField
-          control={form.control}
-          fieldType={FromFieldType.INPUT}
-          name="email"
-          label="Email"
-          placeholder="johndoe@email.com"
-          iconSrc="/assets/icons/email.svg"
-          iconAlt="email"
-        />
-
-        <CustomFormField
-          control={form.control}
-          fieldType={FromFieldType.PHONE_INPUT}
-          name="phone"
-          label="Phone number"
-          placeholder="+1(555)-444 3333"
         />
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>

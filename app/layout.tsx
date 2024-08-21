@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* cn for classname, min-h-screen(min height of 100vh) */}
-      <body className={cn('min-h-screen-dvh bg-dark-300 font-sans antialiased', fontSans.variable)}>
+      <body className={cn('min-h-screen-dvh bg-blue-700 font-sans antialiased', fontSans.variable)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
