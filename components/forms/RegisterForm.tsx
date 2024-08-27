@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form, FormField } from "@/components/ui/form";
+import { Form, FormControl, FormField } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../ui/SubmitButton";
@@ -12,6 +12,9 @@ import { userFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
 import { FromFieldType } from "../forms/PatientForm";
+import { RadioGroup } from "@radix-ui/react-radio-group";
+import { GenderOptions } from "@/constants";
+
 
 const RegisterForm = ({ user }: { user: User }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -82,6 +85,36 @@ const RegisterForm = ({ user }: { user: User }) => {
             placeholder="+1(555)-444 3333"
           />
         </div>
+
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            control={form.control}
+            fieldType={FromFieldType.DATE_PICKER}
+            name="birthDate"
+            label="Date of Birth"
+          />
+
+          <CustomFormField
+            control={form.control}
+            fieldType={FromFieldType.SKELETON}
+            name="gender"
+            label="Gender"
+            renderSkeleton={(field: any) => (
+              <FormControl>
+                <RadioGroup
+                  className="flex h-11 xl:justify-between"
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}>
+                  {GenderOptions}
+                </RadioGroup>
+              </FormControl>
+            )}
+          />
+        </div>
+
+        <div className="flex flex-col gap-6 xl:flex-row"></div>
+
+        <div className="flex flex-col gap-6 xl:flex-row"></div>
 
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
