@@ -32,15 +32,9 @@ interface CustomProps {
 }
 
 //Component to render all inputs
-const RenderField = ({
-  field,
-  fieldType,
-  iconSrc,
-  iconAlt,
-  placeholder,
-  disabled,
-}: CustomProps & { field: any }) => {
-  // const { fieldType, iconSrc, iconAlt, placeholder, disabled } = props;
+  const RenderField = ({ field, props }: { field: any, props: CustomProps }) => {
+  const { fieldType, iconSrc, iconAlt, placeholder, disabled, showTimeSelect, dateFormat } = props;
+  
   switch (fieldType) {
     case FromFieldType.INPUT:
       return (
@@ -93,6 +87,10 @@ const RenderField = ({
             <DatePicker
               selected={field.value}
               onChange={(date) => field.onChange(date)}
+              dateFormat={dateFormat ?? 'MM/dd/yyyy'}
+              showTimeSelect={showTimeSelect ?? false}
+              timeInputLabel="Time:"
+              wrapperClassName="date-picker-wrapper shad-input ml-4 mt-4"
             />
           </FormControl>
         </div>
@@ -113,7 +111,7 @@ const CustomFormField = (props: CustomProps) => {
           {fieldType !== FromFieldType.CHECKBOX && label && (
             <FormLabel>{label}</FormLabel>
           )}
-          <RenderField field={field} {...props} />
+          <RenderField field={field} props={props} />
           <FormMessage className="shad-error" />
         </FormItem>
       )}
