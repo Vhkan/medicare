@@ -1,4 +1,5 @@
 import PatientForm from "@/components/forms/PatientForm";
+import RegisterForm from "@/components/forms/RegisterForm";
 import Link from "next/link";
 import Image from "next/image";
 

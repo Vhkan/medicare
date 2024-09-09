@@ -12,8 +12,9 @@ import { userFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
 import { FromFieldType } from "../forms/PatientForm";
-import { RadioGroup } from "@radix-ui/react-radio-group";
+import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group";
 import { GenderOptions } from "@/constants";
+import { Label } from "@radix-ui/react-label";
 
 
 const RegisterForm = ({ user }: { user: User }) => {
@@ -105,18 +106,22 @@ const RegisterForm = ({ user }: { user: User }) => {
                   className="flex h-11 xl:justify-between"
                   onValueChange={field.onChange}
                   defaultValue={field.value}>
-                  {GenderOptions}
+                  {GenderOptions.map((option) => (
+                    <div key={option} className="radio-group">
+                      <RadioGroupItem value={option} id={option}/>
+                      <Label htmlFor={option} className="cursor-point">
+                        {option}
+                      </Label>
+                    </div>
+                  ))}
                 </RadioGroup>
               </FormControl>
             )}
           />
         </div>
-
         <div className="flex flex-col gap-6 xl:flex-row"></div>
-
         <div className="flex flex-col gap-6 xl:flex-row"></div>
-
-
+        
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
 
       </form>
