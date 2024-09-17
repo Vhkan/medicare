@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
 
 // Form fields types
-export enum FromFieldType {
+export enum FormFieldType {
   INPUT = 'input',
   TEXTAREA = 'textarea',
   PHONE_INPUT = 'phoneInput',
@@ -60,7 +60,7 @@ const PatientForm = () => {
 
         <CustomFormField
           control={form.control}
-          fieldType={FromFieldType.INPUT}
+          fieldType={FormFieldType.INPUT}
           name="name"
           label="Full name"
           placeholder="John Doe"
@@ -70,7 +70,7 @@ const PatientForm = () => {
 
         <CustomFormField
           control={form.control}
-          fieldType={FromFieldType.INPUT}
+          fieldType={FormFieldType.INPUT}
           name="email"
           label="Email"
           placeholder="johndoe@email.com"
@@ -80,7 +80,7 @@ const PatientForm = () => {
 
         <CustomFormField
           control={form.control}
-          fieldType={FromFieldType.PHONE_INPUT}
+          fieldType={FormFieldType.PHONE_INPUT}
           name="phone"
           label="Phone number"
           placeholder="+1(555)-444 3333"

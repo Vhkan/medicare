@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Control } from "react-hook-form";
-import { FromFieldType } from "./forms/PatientForm";
+import { FormFieldType } from "./forms/PatientForm";
 import Image from "next/image";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
@@ -18,7 +18,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 interface CustomProps {
   control: Control<any>;
-  fieldType: FromFieldType;
+  fieldType: FormFieldType;
   name: string;
   label?: string;
   placeholder?: string;
@@ -36,7 +36,7 @@ interface CustomProps {
   const { fieldType, iconSrc, iconAlt, placeholder, disabled, showTimeSelect, dateFormat } = props;
   
   switch (fieldType) {
-    case FromFieldType.INPUT:
+    case FormFieldType.INPUT:
       return (
         <div className="flex rounded-md border border-dark-500 bg-dark-400">
           {iconSrc && (
@@ -58,7 +58,7 @@ interface CustomProps {
           </FormControl>
         </div>
       );
-    case FromFieldType.PHONE_INPUT:
+    case FormFieldType.PHONE_INPUT:
       return (
         <FormControl>
           <PhoneInput
@@ -73,7 +73,7 @@ interface CustomProps {
           />
         </FormControl>
       );
-    case FromFieldType.DATE_PICKER:
+    case FormFieldType.DATE_PICKER:
       return (
         <div className="flex rounded-md border border-dark-500 bg-dark-400">
           <Image
@@ -95,6 +95,7 @@ interface CustomProps {
           </FormControl>
         </div>
       );
+      case FormFieldType.SKELETON:
     default:
       return null;
   }
@@ -108,7 +109,7 @@ const CustomFormField = (props: CustomProps) => {
       name={name}
       render={({ field }) => (
         <FormItem className="flex-1">
-          {fieldType !== FromFieldType.CHECKBOX && label && (
+          {fieldType !== FormFieldType.CHECKBOX && label && (
             <FormLabel>{label}</FormLabel>
           )}
           <RenderField field={field} props={props} />

@@ -11,7 +11,7 @@ import { useState } from "react";
 import { userFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
-import { FromFieldType } from "../forms/PatientForm";
+import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group";
 import { GenderOptions } from "@/constants";
 import { Label } from "@radix-ui/react-label";
@@ -59,7 +59,7 @@ const RegisterForm = ({ user }: { user: User }) => {
 
         <CustomFormField
           control={form.control}
-          fieldType={FromFieldType.INPUT}
+          fieldType={FormFieldType.INPUT}
           name="name"
           label="Full Name"
           placeholder="John Doe"
@@ -70,7 +70,7 @@ const RegisterForm = ({ user }: { user: User }) => {
         <div className="flex flex-col gap-6 xl:flex-row">
           <CustomFormField
             control={form.control}
-            fieldType={FromFieldType.INPUT}
+            fieldType={FormFieldType.INPUT}
             name="email"
             label="Email"
             placeholder="johndoe@email.com"
@@ -80,7 +80,7 @@ const RegisterForm = ({ user }: { user: User }) => {
 
           <CustomFormField
             control={form.control}
-            fieldType={FromFieldType.PHONE_INPUT}
+            fieldType={FormFieldType.PHONE_INPUT}
             name="phone"
             label="Phone number"
             placeholder="+1(555)-444 3333"
@@ -90,14 +90,14 @@ const RegisterForm = ({ user }: { user: User }) => {
         <div className="flex flex-col gap-6 xl:flex-row">
           <CustomFormField
             control={form.control}
-            fieldType={FromFieldType.DATE_PICKER}
+            fieldType={FormFieldType.DATE_PICKER}
             name="birthDate"
             label="Date of Birth"
           />
 
           <CustomFormField
             control={form.control}
-            fieldType={FromFieldType.SKELETON}
+            fieldType={FormFieldType.SKELETON}
             name="gender"
             label="Gender"
             renderSkeleton={(field: any) => (
@@ -121,7 +121,7 @@ const RegisterForm = ({ user }: { user: User }) => {
         </div>
         <div className="flex flex-col gap-6 xl:flex-row"></div>
         <div className="flex flex-col gap-6 xl:flex-row"></div>
-        
+
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
 
       </form>
