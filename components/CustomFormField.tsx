@@ -15,6 +15,7 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { render } from "react-dom";
 
 interface CustomProps {
   control: Control<any>;
@@ -33,7 +34,7 @@ interface CustomProps {
 
 //Component to render all inputs
   const RenderField = ({ field, props }: { field: any, props: CustomProps }) => {
-  const { fieldType, iconSrc, iconAlt, placeholder, disabled, showTimeSelect, dateFormat } = props;
+  const { fieldType, iconSrc, iconAlt, placeholder, disabled, showTimeSelect, dateFormat, renderSkeleton } = props;
   
   switch (fieldType) {
     case FormFieldType.INPUT:
@@ -96,6 +97,7 @@ interface CustomProps {
         </div>
       );
       case FormFieldType.SKELETON:
+        return renderSkeleton ? renderSkeleton(field) : null;
     default:
       return null;
   }
