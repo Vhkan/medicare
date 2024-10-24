@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -16,7 +16,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { GenderOptions } from "@/constants";
 import { Label } from "@radix-ui/react-label";
 
-
 const RegisterForm = ({ user }: { user: User }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -26,25 +25,32 @@ const RegisterForm = ({ user }: { user: User }) => {
     defaultValues: {
       name: "",
       email: "",
-      phone: ""
+      phone: "",
     },
   });
 
-  async function onSubmit({ name, email, phone }: z.infer<typeof userFormValidation>) {
+  async function onSubmit({
+    name,
+    email,
+    phone,
+  }: z.infer<typeof userFormValidation>) {
     setIsLoading(true);
 
     try {
       const userData = { name, email, phone };
       const user = await createUser(userData);
-      if (user) router.push(`/patients/${user.$id}/register`)
+      if (user) router.push(`/patients/${user.$id}/register`);
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-12 flex-1">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-12 flex-1"
+      >
         <section className="mb-12 space-y-4">
           <h2 className="header">Welcome👋</h2>
           <p className="text-dark-700">Let us know more about yourself.</p>
@@ -104,10 +110,11 @@ const RegisterForm = ({ user }: { user: User }) => {
                 <RadioGroup
                   className="flex h-11 gap-6 xl:justify-between"
                   onValueChange={field.onChange}
-                  defaultValue={field.value}>
+                  defaultValue={field.value}
+                >
                   {GenderOptions.map((option, i) => (
                     <div key={option + i} className="radio-group">
-                      <RadioGroupItem value={option} id={option}/>
+                      <RadioGroupItem value={option} id={option} />
                       <Label htmlFor={option} className="cursor-pointer">
                         {option}
                       </Label>
@@ -119,33 +126,26 @@ const RegisterForm = ({ user }: { user: User }) => {
           />
         </div>
 
-        {/* <section className="mb-12 space-y-6">
-          <div className="mb-9 space-y-1">
-            <h2 className="sub-header">Medical Information</h2>
-          </div>
-        </section> */}
-
-        
         <div className="flex flex-col gap-6 xl:flex-row">
-        <CustomFormField
+          <CustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="address"
             label="Address"
             placeholder="Maple Way Street, Montreal, QC"
-          />  
+          />
 
-        <CustomFormField
+          <CustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="occupation"
             label="Occupation"
             placeholder="Software Engineer"
-          />   
+          />
         </div>
 
         <div className="flex flex-col gap-6 xl:flex-row">
-        <CustomFormField
+          <CustomFormField
             control={form.control}
             fieldType={FormFieldType.INPUT}
             name="EmergencyContact"
@@ -162,8 +162,13 @@ const RegisterForm = ({ user }: { user: User }) => {
           />
         </div>
 
-        <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
+        <section className="mb-12 space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Medical Information</h2>
+          </div>
+        </section>
 
+        <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
     </Form>
   );
