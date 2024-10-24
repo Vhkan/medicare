@@ -168,6 +168,15 @@ const RegisterForm = ({ user }: { user: User }) => {
           </div>
         </section>
 
+        <CustomFormField
+          control={form.control}
+          fieldType={FormFieldType.SELECT}
+          name="PrimaryPhysician"
+          label="Primary Physician"
+          placeholder="Select a physician"
+        />
+        {['Dr. John Doe', 'Dr. Jane Doe', 'Dr. Alex Doe'].map((physician) => (}
+
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
     </Form>
