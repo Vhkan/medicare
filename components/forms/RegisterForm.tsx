@@ -144,7 +144,23 @@ const RegisterForm = ({ user }: { user: User }) => {
           />   
         </div>
 
-        <div className="flex flex-col gap-6 xl:flex-row"></div>
+        <div className="flex flex-col gap-6 xl:flex-row">
+        <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.INPUT}
+            name="EmergencyContact"
+            label="Emergency Contact Name"
+            placeholder="Guardian Name"
+          />
+
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.PHONE_INPUT}
+            name="EmergencyContactNumber"
+            label="Emergency Contact Number"
+            placeholder="+1(555)-444 3333"
+          />
+        </div>
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
 
