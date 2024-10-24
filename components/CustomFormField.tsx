@@ -16,6 +16,8 @@ import PhoneInput from "react-phone-number-input";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { render } from "react-dom";
+import { SelectValue } from "@radix-ui/react-select";
+import { Select } from "@radix-ui/react-select";
 
 interface CustomProps {
   control: Control<any>;
@@ -83,7 +85,7 @@ interface CustomProps {
             width={24}
             alt="calendar"
             className="ml-2"
-          />
+          />     
           <FormControl>
             <DatePicker
               selected={field.value}
@@ -96,6 +98,17 @@ interface CustomProps {
           </FormControl>
         </div>
       );
+
+      case FormFieldType.SELECT: 
+       return (
+        <FormControl>
+          <Select onValueChange={field.change} defaultValue={field.value}>
+            <FormControl className="shad-select-trigger">
+              <SelectValue placeholder={placeholder}></SelectValue>
+            </FormControl>
+          </Select>
+        </FormControl>
+       )
       case FormFieldType.SKELETON:
         return renderSkeleton ? renderSkeleton(field) : null;
     default:

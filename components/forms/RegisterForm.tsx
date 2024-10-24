@@ -17,6 +17,7 @@ import { Doctors, GenderOptions } from "@/constants";
 import { Label } from "@radix-ui/react-label";
 import { Select, SelectItem } from "@radix-ui/react-select";
 import Image from "next/image";
+import { SelectTrigger, SelectContent } from "@radix-ui/react-select";
 
 const RegisterForm = ({ user }: { user: User }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -177,18 +178,26 @@ const RegisterForm = ({ user }: { user: User }) => {
           label="Primary Physician"
           placeholder="Select a physician"
         />
-        {Doctors.map((doctor) => (
-          <SelectItem key={doctor.name} value={doctor.name}>
-          <div className="flex cursor-pointer items-center gap-2">
-            <Image src={doctor.name}
-            width={32}
-            height={32}
-            alt={doctor.name}
-            className="rounded-full border border-dark-500"/>
-            <p>{doctor.name}</p>
-          </div>
-          </SelectItem>
-        ))}
+
+        <Select>
+          <SelectTrigger aria-label="Primary Physician" />
+          <SelectContent>
+            {Doctors.map((doctor, i) => (
+              <SelectItem key={doctor.name + i} value={doctor.name}>
+                <div className="flex cursor-pointer items-center gap-2">
+                  <Image
+                    src={doctor.image}
+                    width={32}
+                    height={32}
+                    alt={doctor.name}
+                    className="rounded-full border border-dark-500"
+                  />
+                  <p>{doctor.name}</p>
+                </div>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
