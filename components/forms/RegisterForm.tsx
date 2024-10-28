@@ -3,8 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form, FormControl, FormField } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form, FormControl } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../ui/SubmitButton";
 import { useState } from "react";
@@ -13,7 +12,12 @@ import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
 import { FormFieldType } from "./PatientForm";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Doctors, GenderOptions } from "@/constants";
+import {
+  Doctors,
+  GenderOptions,
+  IdentificationTypes,
+  PatientFormDefaultValues,
+} from "@/constants";
 import { Label } from "@radix-ui/react-label";
 import { Select, SelectItem } from "@radix-ui/react-select";
 import Image from "next/image";
@@ -179,24 +183,20 @@ const RegisterForm = ({ user }: { user: User }) => {
           label="Primary Care Physician"
           placeholder="Select a physician"
         >
-          <Select>
-            <SelectContent>
-              {Doctors.map((doctor, i) => (
-                <SelectItem key={doctor.name + i} value={doctor.name}>
-                  <div className="flex cursor-pointer items-center gap-2">
-                    <Image
-                      src={doctor.image}
-                      width={32}
-                      height={32}
-                      alt={doctor.name}
-                      className="rounded-full border border-dark-500"
-                    />
-                    <p>{doctor.name}</p>
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          {Doctors.map((doctor, i) => (
+            <SelectItem key={doctor.name + i} value={doctor.name}>
+              <div className="flex cursor-pointer items-center gap-2">
+                <Image
+                  src={doctor.image}
+                  width={32}
+                  height={32}
+                  alt={doctor.name}
+                  className="rounded-full border border-dark-500"
+                />
+                <p>{doctor.name}</p>
+              </div>
+            </SelectItem>
+          ))}
         </CustomFormField>
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
