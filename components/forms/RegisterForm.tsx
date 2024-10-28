@@ -19,9 +19,8 @@ import {
   PatientFormDefaultValues,
 } from "@/constants";
 import { Label } from "@radix-ui/react-label";
-import { Select, SelectItem } from "@radix-ui/react-select";
+import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
-import { SelectTrigger, SelectContent } from "@radix-ui/react-select";
 
 const RegisterForm = ({ user }: { user: User }) => {
   const [isLoading, setIsLoading] = useState(false);

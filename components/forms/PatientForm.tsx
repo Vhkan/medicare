@@ -3,15 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Form, FormField } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../ui/SubmitButton";
 import { useState } from "react";
 import { userFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
+import "react-phone-number-input/style.css";
 
 // Form fields types
 export enum FormFieldType {
