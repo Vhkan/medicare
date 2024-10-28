@@ -171,33 +171,33 @@ const RegisterForm = ({ user }: { user: User }) => {
           </div>
         </section>
 
+        {/* PRIMARY CARE PHYSICIAN */}
         <CustomFormField
-          control={form.control}
           fieldType={FormFieldType.SELECT}
-          name="PrimaryPhysician"
-          label="Primary Physician"
+          control={form.control}
+          name="primaryPhysician"
+          label="Primary Care Physician"
           placeholder="Select a physician"
-        />
-
-        <Select>
-          <SelectTrigger aria-label="Primary Physician" />
-          <SelectContent>
-            {Doctors.map((doctor, i) => (
-              <SelectItem key={doctor.name + i} value={doctor.name}>
-                <div className="flex cursor-pointer items-center gap-2">
-                  <Image
-                    src={doctor.image}
-                    width={32}
-                    height={32}
-                    alt={doctor.name}
-                    className="rounded-full border border-dark-500"
-                  />
-                  <p>{doctor.name}</p>
-                </div>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        >
+          <Select>
+            <SelectContent>
+              {Doctors.map((doctor, i) => (
+                <SelectItem key={doctor.name + i} value={doctor.name}>
+                  <div className="flex cursor-pointer items-center gap-2">
+                    <Image
+                      src={doctor.image}
+                      width={32}
+                      height={32}
+                      alt={doctor.name}
+                      className="rounded-full border border-dark-500"
+                    />
+                    <p>{doctor.name}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </CustomFormField>
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
