@@ -190,6 +190,22 @@ const RegisterForm = ({ user }: { user: User }) => {
             placeholder="AB123456"
           />
 
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.TEXTAREA}
+            name="Allergies"
+            label="Allergies (if any)"
+            placeholder="Pollens, peanuts, penicillin"
+          />
+
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.INPUT}
+            name="CurrentMedication"
+            label="Current Medication (if any)"
+            placeholder="Ibuprofen 200mg, Advil 400mg"
+          />
+
         {/* PRIMARY CARE PHYSICIAN */}
         <CustomFormField
           fieldType={FormFieldType.SELECT}
