@@ -174,6 +174,22 @@ const RegisterForm = ({ user }: { user: User }) => {
           </div>
         </section>
 
+        <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.INPUT}
+            name="InsuranceProvider"
+            label="Insurance provider"
+            placeholder="Blue Cross Blue Shield"
+          />
+
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.INPUT}
+            name="InsurancePolicyNumber"
+            label="Insurance Policy Number"
+            placeholder="AB123456"
+          />
+
         {/* PRIMARY CARE PHYSICIAN */}
         <CustomFormField
           fieldType={FormFieldType.SELECT}
