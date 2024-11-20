@@ -175,36 +175,36 @@ const RegisterForm = ({ user }: { user: User }) => {
         </section>
 
         <CustomFormField
-            control={form.control}
-            fieldType={FormFieldType.INPUT}
-            name="InsuranceProvider"
-            label="Insurance provider"
-            placeholder="Blue Cross Blue Shield"
-          />
+          control={form.control}
+          fieldType={FormFieldType.INPUT}
+          name="InsuranceProvider"
+          label="Insurance provider"
+          placeholder="Blue Cross Blue Shield"
+        />
 
-          <CustomFormField
-            control={form.control}
-            fieldType={FormFieldType.INPUT}
-            name="InsurancePolicyNumber"
-            label="Insurance Policy Number"
-            placeholder="AB123456"
-          />
+        <CustomFormField
+          control={form.control}
+          fieldType={FormFieldType.INPUT}
+          name="InsurancePolicyNumber"
+          label="Insurance Policy Number"
+          placeholder="AB123456"
+        />
 
-          <CustomFormField
-            control={form.control}
-            fieldType={FormFieldType.TEXTAREA}
-            name="Allergies"
-            label="Allergies (if any)"
-            placeholder="Pollens, peanuts, penicillin"
-          />
+        <CustomFormField
+          control={form.control}
+          fieldType={FormFieldType.TEXTAREA}
+          name="Allergies"
+          label="Allergies (if any)"
+          placeholder="Pollens, peanuts, penicillin"
+        />
 
-          <CustomFormField
-            control={form.control}
-            fieldType={FormFieldType.TEXTAREA}
-            name="CurrentMedication"
-            label="Current Medication (if any)"
-            placeholder="Ibuprofen 200mg, Advil 400mg"
-          />
+        <CustomFormField
+          control={form.control}
+          fieldType={FormFieldType.TEXTAREA}
+          name="CurrentMedication"
+          label="Current Medication (if any)"
+          placeholder="Ibuprofen 200mg, Advil 400mg"
+        />
 
         {/* PRIMARY CARE PHYSICIAN */}
         <CustomFormField
@@ -247,7 +247,25 @@ const RegisterForm = ({ user }: { user: User }) => {
             placeholder="Had chicken pox at 5"
           />
         </div>
-        
+        <section className="mb-12 space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Identification and Verification</h2>
+          </div>
+        </section>
+
+        <CustomFormField
+          fieldType={FormFieldType.SELECT}
+          control={form.control}
+          name="identificationType"
+          label="Identification Type"
+          placeholder="Select Identification Type"
+        >
+          {IdentificationTypes.map((type) => (
+            <SelectItem key={type} value={type}>
+              {type}
+            </SelectItem>
+          ))}
+        </CustomFormField>
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
