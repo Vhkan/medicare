@@ -200,7 +200,7 @@ const RegisterForm = ({ user }: { user: User }) => {
 
           <CustomFormField
             control={form.control}
-            fieldType={FormFieldType.INPUT}
+            fieldType={FormFieldType.TEXTAREA}
             name="CurrentMedication"
             label="Current Medication (if any)"
             placeholder="Ibuprofen 200mg, Advil 400mg"
@@ -229,6 +229,25 @@ const RegisterForm = ({ user }: { user: User }) => {
             </SelectItem>
           ))}
         </CustomFormField>
+
+        <div className="flex flex-col gap-6 xl:flex-row">
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.TEXTAREA}
+            name="familyMedicalHistory"
+            label="Family Medical History"
+            placeholder="Brother had a chicken pox disease"
+          />
+
+          <CustomFormField
+            control={form.control}
+            fieldType={FormFieldType.TEXTAREA}
+            name="PastMedicalistory"
+            label="Past Medical History"
+            placeholder="Had chicken pox at 5"
+          />
+        </div>
+        
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>

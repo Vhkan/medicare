@@ -17,7 +17,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 
-
 interface CustomProps {
   control: Control<any>;
   name: string;
@@ -76,7 +75,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             placeholder={placeholder}
             {...field}
             className="shad-textArea"
-            disabled={props.disabled} 
+            disabled={props.disabled}
           />
         </FormControl>
       );
@@ -118,21 +117,21 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         </div>
       );
 
-      case FormFieldType.SELECT:
-        return (
-          <FormControl>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <FormControl>
-                <SelectTrigger className="shad-select-trigger">
-                  <SelectValue placeholder={props.placeholder} />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent className="shad-select-content">
-                {props.children}
-              </SelectContent>
-            </Select>
-          </FormControl>
-        );
+    case FormFieldType.SELECT:
+      return (
+        <FormControl>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl>
+              <SelectTrigger className="shad-select-trigger">
+                <SelectValue placeholder={props.placeholder} />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent className="shad-select-content">
+              {props.children}
+            </SelectContent>
+          </Select>
+        </FormControl>
+      );
 
     case FormFieldType.SKELETON:
       return props.renderSkeleton ? props.renderSkeleton(field) : null;
