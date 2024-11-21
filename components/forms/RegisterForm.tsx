@@ -283,7 +283,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           label="Photo | Scan-copy of Identification Document"
           renderSkeleton={(field) => (
            <FormControl>
-            <FileUploader/>
+            <FileUploader files={field.value} onChange={field.onChange}/>
            </FormControl>
           )}
         />
