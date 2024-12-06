@@ -1,7 +1,17 @@
-import { ID, Query } from "node-appwrite";
-import { BUCKET_ID, DATABASE_ID, databases, ENDPOINT, users } from "../appwrite.config";
+"use server";
+
+import { ID, Query, InputFile } from "node-appwrite";
+import {
+  BUCKET_ID,
+  DATABASE_ID,
+  ENDPOINT,
+  PATIENT_COLLECTION_ID,
+  PROJECT_ID,
+  databases,
+  storage,
+  users,
+} from "../appwrite.config";
 import { parseStringify } from "../utils";
-import { InputFile } from "node-appwrite/file";
 
 export const createUser = async (user: CreateUserParams) => {
   try {
@@ -12,8 +22,9 @@ export const createUser = async (user: CreateUserParams) => {
       undefined,
       user.name
     );
-    console.log({ newUser });
+
     return parseStringify(newUser);
+    
   } catch (error: any) {
     if (error && error?.code === 409) {
       const documents = await users.list([
@@ -24,6 +35,7 @@ export const createUser = async (user: CreateUserParams) => {
   }
 };  
 
+//Get user server action
 export const getUser = async (userId: string) => {
   try {
     const user = await users.get(userId);
@@ -33,29 +45,41 @@ export const getUser = async (userId: string) => {
   }
 };
 
-//register patient server action
-export const registerPatient = async ({ identificationDocument, ...patient}): RegisterUserParams => { 
+//register patient
+export const registerPatient = async ({
+  identificationDocument,
+  ...patient
+}: RegisterUserParams) => {
   try {
     let file;
-    if (identificationDocument) {
-      const inputFile = inputFile.fromBuffer(identificationDocument?.get('blobFile') as Blob,
-        identificationDocument?.get('fileName') as string,
-        )
-        file = await storage.createFile(BUCKET_ID, ID.unique(), inputFile);
+    if (
+      identificationDocument &&
+      identificationDocument.get("blobFile") &&
+      identificationDocument.get("fileName")
+    ) {
+      const inputFile = InputFile.fromBlob(
+        identificationDocument.get("blobFile") as Blob,
+        identificationDocument.get("fileName") as string
+      );
+
+      file = await storage.createFile(BUCKET_ID!, ID.unique(), inputFile);
     }
+
     const newPatient = await databases.createDocument(
-      DATABASE_ID,
-      PATIENT_COLLECTION_ID,
+      DATABASE_ID!,
+      PATIENT_COLLECTION_ID!,
       ID.unique(),
       {
-        ...identificationDocumentId: file?.$id || null,
-        identificationDocumentURL: `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file?.$id}/view?project=${PROJECT_ID}`,
-        ...patient
+        identificationDocumentId: file?.$id || null,
+        identificationDocumentUrl: file?.$id
+          ? `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file.$id}/view?project=${PROJECT_ID}`
+          : null,
+        ...patient,
       }
     );
+
     return parseStringify(newPatient);
   } catch (error) {
-    console.error("Error registering patient:", error);
-    throw error;
-  }  
- };
+    console.error("An error occurred while creating a new patient:", error);
+  }
+};
