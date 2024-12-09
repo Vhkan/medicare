@@ -32,9 +32,9 @@ const RegisterForm = ({ user }: { user: User }) => {
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
       ...PatientFormDefaultValues,
-      name: "",
-      email: "",
-      phone: "",
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
     },
   });
 
@@ -43,7 +43,10 @@ const RegisterForm = ({ user }: { user: User }) => {
 
     let formData;
 
-    if (values.identificationDocument && values.identificationDocument.length > 0) {
+    if (
+      values.identificationDocument &&
+      values.identificationDocument.length > 0
+    ) {
       const blobFile = new Blob([values.identificationDocument[0]], {
         type: values.identificationDocument[0].type,
       });
@@ -58,15 +61,15 @@ const RegisterForm = ({ user }: { user: User }) => {
         userId: user.$id,
         birthDate: new Date(values.birthDate),
         identificationDocument: formData,
-      }
+      };
+      // @ts-ignore
       const patient = await registerPatient(patientData);
 
-      if(patient) router.push(`/patients/${user.$id}/new-appointment`);
-
+      if (patient) router.push(`/patients/${user.$id}/new-appointment`);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <Form {...form}>
@@ -330,8 +333,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           name="privacytConsent"
           label="I acknowledge that I have reviewed and agreed to the privacy policy"
         />
-
-        <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
+        <SubmitButton isLoading={isLoading}>Submit and Continue</SubmitButton>
       </form>
     </Form>
   );
