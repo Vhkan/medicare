@@ -18,6 +18,8 @@ import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { Check } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
+import { E164Number } from "libphonenumber-js";
+
 
 interface CustomProps {
   control: Control<any>;
@@ -89,7 +91,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             placeholder={placeholder}
             international
             countryCallingCode
-            value={field.value}
+            value={field.value as E164Number | undefined}
             onChange={field.onChange}
             onBlur={field.onBlur}
             className="input-phone"
