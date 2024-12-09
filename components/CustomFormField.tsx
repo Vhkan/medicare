@@ -20,7 +20,6 @@ import { Check } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
 import { E164Number } from "libphonenumber-js";
 
-
 interface CustomProps {
   control: Control<any>;
   name: string;
@@ -90,7 +89,6 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             defaultCountry="CA"
             placeholder={placeholder}
             international
-            countryCallingCode
             value={field.value as E164Number | undefined}
             onChange={field.onChange}
             onBlur={field.onBlur}
@@ -136,11 +134,11 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           </Select>
         </FormControl>
       );
-      case FormFieldType.CHECKBOX:
-        return (
+    case FormFieldType.CHECKBOX:
+      return (
         <FormControl>
           <div className="flex items-center gap-4">
-            <Checkbox 
+            <Checkbox
               id={props.name}
               checked={field.value}
               onCheckedChange={field.onChange}
@@ -150,7 +148,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
             </label>
           </div>
         </FormControl>
-        );        
+      );
 
     case FormFieldType.SKELETON:
       return props.renderSkeleton ? props.renderSkeleton(field) : null;
