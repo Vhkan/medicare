@@ -18,7 +18,7 @@ import {
   IdentificationTypes,
   PatientFormDefaultValues,
 } from "@/constants";
-import { Label } from "@radix-ui/react-label";
+import { Label } from "@/components/ui/label";
 import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
 import FileUploader from "../FileUploader";

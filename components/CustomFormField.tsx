@@ -16,7 +16,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
-import { Check } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
 import { E164Number } from "libphonenumber-js";
 
