@@ -2,6 +2,7 @@ import PatientForm from "@/components/forms/PatientForm";
 import RegisterForm from "@/components/forms/RegisterForm";
 import Link from "next/link";
 import Image from "next/image";
+import AppointmentForm from "@/components/forms/AppointmentForm";
 
 export default function NewAppointment() {
   return (
@@ -15,7 +16,7 @@ export default function NewAppointment() {
             alt="patient"
             className="mb-12 h-10 w-fit"
           />
-          {/* <PatientForm /> */}
+          <AppointmentForm />
           <p className="justify-items-end text-dark-600 xl:text-left">
             © 2024 MediCare
           </p>
