@@ -44,8 +44,8 @@ const AppointmentForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
         <section className="mb-12 space-y-4">
-          <h2 className="header">Hi there👋</h2>
-          <p className="text-dark-700">Schedule Your First Appointment</p>
+          <h2 className="header">New Appointment📝</h2>
+          <p className="text-dark-700">Request a new appointment in few seconds</p>
         </section>
 
         <CustomFormField
