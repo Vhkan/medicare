@@ -3,6 +3,7 @@ import RegisterForm from "@/components/forms/RegisterForm";
 import Link from "next/link";
 import Image from "next/image";
 import AppointmentForm from "@/components/forms/AppointmentForm";
+import { getPatient } from "@/lib/actions/patient.actions";
 
 export default async function NewAppointment({ params: { userId }} : SearchParamProps) {
   const patient = await getPatient(userId);
@@ -19,7 +20,9 @@ export default async function NewAppointment({ params: { userId }} : SearchParam
           />
           <AppointmentForm 
             type="create"
-            userId = {userId}/>
+            userId = {userId}
+            patientId={patient.$id}
+            />
           <p className="justify-items-end text-dark-600 xl:text-left">
             © 2024 MediCare
           </p>

@@ -113,7 +113,6 @@ const RegisterForm = ({ user }: { user: User }) => {
           </div>
 
           {/* NAME */}
-
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
