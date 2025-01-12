@@ -29,7 +29,11 @@ const AppointmentForm = () => {
     },
   });
 
-  async function onSubmit({ name, email, phone }: z.infer<typeof UserFormValidation>) {
+  async function onSubmit({
+    name,
+    email,
+    phone,
+  }: z.infer<typeof UserFormValidation>) {
     setIsLoading(true);
 
     try {
@@ -48,7 +52,9 @@ const AppointmentForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
         <section className="mb-12 space-y-4">
           <h2 className="header">New Appointment📝</h2>
-          <p className="text-dark-700">Request a new appointment in a few seconds</p>
+          <p className="text-dark-700">
+            Request a new appointment in a few seconds
+          </p>
         </section>
 
         {type !== "cancel" && (
@@ -84,6 +90,30 @@ const AppointmentForm = () => {
               showTimeSelect
               dateFormat="MM/dd/yyyy  -  h:mm aa"
             />
+
+            <div
+              className={`flex flex-col gap-6  ${
+                type === "create" && "xl:flex-row"
+              }`}
+            >
+              <CustomFormField
+                fieldType={FormFieldType.TEXTAREA}
+                control={form.control}
+                name="reason"
+                label="Appointment reason"
+                placeholder="Annual montly check-up"
+                disabled={type === "schedule"}
+              />
+
+              <CustomFormField
+                fieldType={FormFieldType.TEXTAREA}
+                control={form.control}
+                name="note"
+                label="Comments/notes"
+                placeholder="Prefer afternoon appointments, if possible"
+                disabled={type === "schedule"}
+              />
+            </div>
           </>
         )}
 
