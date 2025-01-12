@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -10,23 +10,22 @@ import { UserFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
 import "react-phone-number-input/style.css";
-import PatientForm from "@/components/forms/PatientForm";
-import { Doctors } from "@/constants";
-import Image from "next/image";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import { SelectItem } from "@/components/ui/select";
+import { Doctors } from "@/constants";
+import Image from "next/image";
 
-
-const AppointmentForm = ({userId, patientId, type}: { userId: string; patientId: string; type: "create" | "cancel" } ) => {
+const AppointmentForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const type: "default" | "cancel" = "default";
 
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
     defaultValues: {
       name: "",
       email: "",
-      phone: ""
+      phone: "",
     },
   });
 
@@ -36,23 +35,24 @@ const AppointmentForm = ({userId, patientId, type}: { userId: string; patientId:
     try {
       const userData = { name, email, phone };
       const user = await createUser(userData);
-      if (user) router.push(`/patients/${user.$id}/register`)
+      if (user) router.push(`/patients/${user.$id}/register`);
     } catch (error) {
-      console.log(error);
-    } 
-    // setIsLoading(false);
-  };
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
         <section className="mb-12 space-y-4">
           <h2 className="header">New Appointment📝</h2>
-          <p className="text-dark-700">Request a new appointment in few seconds</p>
+          <p className="text-dark-700">Request a new appointment in a few seconds</p>
         </section>
 
-        { type !== "cancel" && (
-           <>
+        {type !== "cancel" && (
+          <>
             <CustomFormField
               fieldType={FormFieldType.SELECT}
               control={form.control}
@@ -64,7 +64,7 @@ const AppointmentForm = ({userId, patientId, type}: { userId: string; patientId:
                 <SelectItem key={doctor.name + i} value={doctor.name}>
                   <div className="flex cursor-pointer items-center gap-2">
                     <Image
-                      src={doctor.image}
+                      src={doctor.image || "/placeholder-image.png"}
                       width={32}
                       height={32}
                       alt="doctor"
@@ -75,11 +75,19 @@ const AppointmentForm = ({userId, patientId, type}: { userId: string; patientId:
                 </SelectItem>
               ))}
             </CustomFormField>
+
+            <CustomFormField
+              fieldType={FormFieldType.DATE_PICKER}
+              control={form.control}
+              name="schedule"
+              label="Expected appointment date"
+              showTimeSelect
+              dateFormat="MM/dd/yyyy  -  h:mm aa"
+            />
           </>
         )}
 
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
-
       </form>
     </Form>
   );
