@@ -14,6 +14,7 @@ import CustomFormField, { FormFieldType } from "../CustomFormField";
 import { SelectItem } from "@/components/ui/select";
 import { Doctors } from "@/constants";
 import Image from "next/image";
+import { create } from "domain";
 
 const AppointmentForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,6 +47,22 @@ const AppointmentForm = () => {
       setIsLoading(false);
     }
   }
+
+  let buttonLabel;
+  switch (type) {
+    case 'cancel': 
+      buttonLabel = 'Cancel Appointment';
+      break;
+      case 'create': 
+        buttonLabel = 'Create Appointment';
+        break;
+        case 'schedule': 
+          buttonLabel = 'Schedule Appointment';
+          case 'schedule': 
+            buttonLabel = 'Schedule Appointment';
+            break;
+            default:
+              break;
 
   return (
     <Form {...form}>
@@ -127,7 +144,8 @@ const AppointmentForm = () => {
           />
         )}
 
-        <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
+        <SubmitButton isLoading={isLoading}  className={`${type === "cancel" ? "shad-danger-btn" : "shad-primary-btn"} w-full`}
+        >Get Started</SubmitButton>
       </form>
     </Form>
   );
