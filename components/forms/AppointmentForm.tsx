@@ -15,11 +15,12 @@ import { SelectItem } from "@/components/ui/select";
 import { Doctors } from "@/constants";
 import Image from "next/image";
 import { create } from "domain";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AppointmentForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const type: "default" | "cancel" = "default";
+  const type: "default" | "cancel" | "create" | "schedule" = "default";
 
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
@@ -48,33 +49,30 @@ const AppointmentForm = () => {
     }
   }
 
-  let buttonLabel;
-  switch (type) {
-    case 'cancel': 
-      buttonLabel = 'Cancel Appointment';
-      break;
-      case 'create': 
-        buttonLabel = 'Create Appointment';
-        break;
-        case 'schedule': 
-          buttonLabel = 'Schedule Appointment';
-          case 'schedule': 
-            buttonLabel = 'Schedule Appointment';
-            break;
-            default:
-              break;
+  let buttonLabel = (() => {
+    switch (type) {
+      case "cancel":
+        return "Cancel Appointment";
+      case "create":
+        return "Create Appointment";
+      case "schedule":
+        return "Schedule Appointment";
+      default:
+        return "Get Started"; // Fallback label
+    }
+  })();
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
         <section className="mb-12 space-y-4">
-          <h2 className="header">New Appointment📝</h2>
+          <h2 className="header">New Appointment 📝</h2>
           <p className="text-dark-700">
             Request a new appointment in a few seconds
           </p>
         </section>
 
-        {type !== "cancel" && (
+        {type === "default" || type === "create" || type === "schedule" && (
           <>
             <CustomFormField
               fieldType={FormFieldType.SELECT}
@@ -105,11 +103,11 @@ const AppointmentForm = () => {
               name="schedule"
               label="Expected appointment date"
               showTimeSelect
-              dateFormat="MM/dd/yyyy  -  h:mm aa"
+              dateFormat="MM/dd/yyyy - h:mm aa"
             />
 
             <div
-              className={`flex flex-col gap-6  ${
+              className={`flex flex-col gap-6 ${
                 type === "create" && "xl:flex-row"
               }`}
             >
@@ -118,7 +116,7 @@ const AppointmentForm = () => {
                 control={form.control}
                 name="reason"
                 label="Appointment reason"
-                placeholder="Annual montly check-up"
+                placeholder="Enter reason for appointment"
                 disabled={type === "schedule"}
               />
 
@@ -144,8 +142,14 @@ const AppointmentForm = () => {
           />
         )}
 
-        <SubmitButton isLoading={isLoading}  className={`${type === "cancel" ? "shad-danger-btn" : "shad-primary-btn"} w-full`}
-        >Get Started</SubmitButton>
+        <SubmitButton
+          isLoading={isLoading}
+          className={`${
+            type === "cancel" ? "shad-danger-btn" : "shad-primary-btn"
+          } w-full`}
+        >
+          {buttonLabel}
+        </SubmitButton>
       </form>
     </Form>
   );
