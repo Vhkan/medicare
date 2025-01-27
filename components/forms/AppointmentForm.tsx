@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import SubmitButton from "../ui/SubmitButton";
 import { useState } from "react";
-import { UserFormValidation } from "@/lib/validation";
+import { AppointmentFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
 import "react-phone-number-input/style.css";
@@ -16,27 +16,41 @@ import { Doctors } from "@/constants";
 import Image from "next/image";
 import { create } from "domain";
 import "react-datepicker/dist/react-datepicker.css";
+import { scheduler } from "timers/promises";
 
 const AppointmentForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const type: "default" | "cancel" | "create" | "schedule" = "default";
 
-  const form = useForm<z.infer<typeof UserFormValidation>>({
-    resolver: zodResolver(UserFormValidation),
+  const form = useForm<z.infer<typeof AppointmentFormValidation>>({
+    resolver: zodResolver(AppointmentFormValidation),
     defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
+      primaryPhysician: "",
+      schedule: new Date(),
+      reason: "",
+      note: "",
+      cancellationReason: "",
     },
   });
 
-  async function onSubmit({
-    name,
-    email,
-    phone,
-  }: z.infer<typeof UserFormValidation>) {
+  async function onSubmit(values : z.infer<typeof AppointmentFormValidation>) {
     setIsLoading(true);
+
+    let status; // status of the appointment
+    switch (type) {
+      case "schedule":
+        status = "shceduled";
+        break;
+      case "cancel":
+        status = "cancelled";
+        break;
+        case "pending":
+          status = "pending";
+          break;
+    };
+
+
 
     try {
       const userData = { name, email, phone };
@@ -72,65 +86,67 @@ const AppointmentForm = () => {
           </p>
         </section>
 
-        {type === "default" || type === "create" || type === "schedule" && (
-          <>
-            <CustomFormField
-              fieldType={FormFieldType.SELECT}
-              control={form.control}
-              name="primaryPhysician"
-              label="Doctor"
-              placeholder="Select a doctor"
-            >
-              {Doctors.map((doctor, i) => (
-                <SelectItem key={doctor.name + i} value={doctor.name}>
-                  <div className="flex cursor-pointer items-center gap-2">
-                    <Image
-                      src={doctor.image || "/placeholder-image.png"}
-                      width={32}
-                      height={32}
-                      alt="doctor"
-                      className="rounded-full border border-dark-500"
-                    />
-                    <p>{doctor.name}</p>
-                  </div>
-                </SelectItem>
-              ))}
-            </CustomFormField>
-
-            <CustomFormField
-              fieldType={FormFieldType.DATE_PICKER}
-              control={form.control}
-              name="schedule"
-              label="Expected appointment date"
-              showTimeSelect
-              dateFormat="MM/dd/yyyy - h:mm aa"
-            />
-
-            <div
-              className={`flex flex-col gap-6 ${
-                type === "create" && "xl:flex-row"
-              }`}
-            >
+        {type === "default" ||
+          type === "create" ||
+          (type === "schedule" && (
+            <>
               <CustomFormField
-                fieldType={FormFieldType.TEXTAREA}
+                fieldType={FormFieldType.SELECT}
                 control={form.control}
-                name="reason"
-                label="Appointment reason"
-                placeholder="Enter reason for appointment"
-                disabled={type === "schedule"}
-              />
+                name="primaryPhysician"
+                label="Doctor"
+                placeholder="Select a doctor"
+              >
+                {Doctors.map((doctor, i) => (
+                  <SelectItem key={doctor.name + i} value={doctor.name}>
+                    <div className="flex cursor-pointer items-center gap-2">
+                      <Image
+                        src={doctor.image || "/placeholder-image.png"}
+                        width={32}
+                        height={32}
+                        alt="doctor"
+                        className="rounded-full border border-dark-500"
+                      />
+                      <p>{doctor.name}</p>
+                    </div>
+                  </SelectItem>
+                ))}
+              </CustomFormField>
 
               <CustomFormField
-                fieldType={FormFieldType.TEXTAREA}
+                fieldType={FormFieldType.DATE_PICKER}
                 control={form.control}
-                name="note"
-                label="Comments/notes"
-                placeholder="Prefer afternoon appointments, if possible"
-                disabled={type === "schedule"}
+                name="schedule"
+                label="Expected appointment date"
+                showTimeSelect
+                dateFormat="MM/dd/yyyy - h:mm aa"
               />
-            </div>
-          </>
-        )}
+
+              <div
+                className={`flex flex-col gap-6 ${
+                  type === "create" && "xl:flex-row"
+                }`}
+              >
+                <CustomFormField
+                  fieldType={FormFieldType.TEXTAREA}
+                  control={form.control}
+                  name="reason"
+                  label="Appointment reason"
+                  placeholder="Enter reason for appointment"
+                  disabled={type === "schedule"}
+                />
+
+                <CustomFormField
+                  fieldType={FormFieldType.TEXTAREA}
+                  control={form.control}
+                  name="note"
+                  label="Note"
+                  placeholder="Enter any additional notes here"
+                  disabled={type === "schedule"}
+                />
+              </div>
+            </>
+          ))}
 
         {type === "cancel" && (
           <CustomFormField
