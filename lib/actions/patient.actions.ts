@@ -76,7 +76,8 @@ export const registerPatient = async ({
 
       file = await uploadFile(blobFile, fileName);
     }
-
+    
+    //Creating a new patient
     const newPatient = await databases.createDocument(
       DATABASE_ID!,
       PATIENT_COLLECTION_ID!,
