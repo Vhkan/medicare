@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Form } from "@/components/ui/form";
 import SubmitButton from "../ui/SubmitButton";
 import { useState } from "react";
-import { AppointmentFormValidation } from "@/lib/validation";
+import { AppointmentFormValidation, getAppointmentSchema } from "@/lib/validation";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
 import "react-phone-number-input/style.css";
@@ -14,14 +14,15 @@ import CustomFormField, { FormFieldType } from "../CustomFormField";
 import { SelectItem } from "@/components/ui/select";
 import { Doctors } from "@/constants";
 import Image from "next/image";
-import { create } from "domain";
 import "react-datepicker/dist/react-datepicker.css";
-import { scheduler } from "timers/promises";
+import { get } from "http";
 
 const AppointmentForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [type, setType] = useState<"default" | "cancel" | "create" | "schedule">("default");
-  
+
+  const AppointmentFormValidation = getAppointmentSchema(type); 
+
   const router = useRouter();
   const userId = "123";  // Example placeholder
   const patientId = "456"; // Example placeholder
@@ -40,6 +41,7 @@ const AppointmentForm = () => {
   async function onSubmit(values: z.infer<typeof AppointmentFormValidation>) {
     setIsLoading(true);
     let status;
+
     switch (type) {
       case "schedule":
         status = "scheduled";
@@ -56,7 +58,7 @@ const AppointmentForm = () => {
 
     try {
       if (type === "create" && patientId) {
-        const appointment = {
+        const appointmentData = {
           userId,
           patient: patientId,
           primaryPhysician: values.primaryPhysician,
@@ -66,19 +68,20 @@ const AppointmentForm = () => {
           note: values.note,
         };
 
-        const newAppointment = await createAppointment(appointment);
-
-        if (newAppointment) {
+        const appointment = await createAppointment(appointmentData);
+        if (appointment !== undefined) {
           form.reset();
-          router.push(`/patients/${userId}/new-appointment/success?appointmentId=${newAppointment.$id}`);
+          router.push(`/patients/${userId}/new-appointment/success?appointmentId=${appointment.$id}`);
         }
-      } 
+      }
+
     } catch (error) {
       console.error("Failed to create appointment:", error);
     } finally {
       setIsLoading(false);
     }
   }
+
 
   let buttonLabel = (() => {
     switch (type) {
@@ -174,3 +177,7 @@ const AppointmentForm = () => {
 };
 
 export default AppointmentForm;
+
+function createAppointment(appointment: { userId: string; patient: string; primaryPhysician: any; schedule: Date; reason: any; status: Status; note: any; }) {
+  throw new Error("Function not implemented.");
+};
